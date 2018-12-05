@@ -1,0 +1,53 @@
+/*body{
+background: url("https://youtu.be/Q6m5On60yh0") no-repeat center center fixed;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+
+	}
+*/
+#spacing{
+	height:100px;
+}
+
+#halfspacing{
+	height:50px;
+}
+
+#pillabout,#pillproj,#pillskill,#pillcontact{
+	border-color: black;
+	border-width=1px;
+	border-top-left-radius: 30px;
+	border-top-right-radius: 30px;
+	border-bottom-left-radius: 30px;
+	border-bottom-right-radius: 30px;
+	width:180px;
+	text-align: center;
+	height:50px;
+	background-color: lightgrey;
+}
+
+#minispace{
+	height:15px;
+}
+
+#extendwidth{
+	width:600%;
+	position: relative;
+	left:-600px;
+	color:black;
+	height:1px;
+}
+
+#largespace{
+		height:600px;
+}
+
+#test{
+	height:1000px;
+	width:50%;
+	margin: 10px;
+	background-color: green
+}
