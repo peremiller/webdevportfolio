@@ -51,3 +51,11 @@ background: url("https://youtu.be/Q6m5On60yh0") no-repeat center center fixed;
 	margin: 10px;
 	background-color: green
 }
+
+#abo,#pro,#ski,#con,#abo1,#pro1,#ski1,#con1{
+	margin:30px;
+}
+
+#abo,#pro,#ski,#con{
+	padding-top: 15px;
+}
