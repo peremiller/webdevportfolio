@@ -9,7 +9,7 @@ background: url("https://youtu.be/Q6m5On60yh0") no-repeat center center fixed;
 	}
 */
 #spacing{
-	height:100px;
+	height:10px;
 }
 
 #halfspacing{
@@ -59,3 +59,12 @@ background: url("https://youtu.be/Q6m5On60yh0") no-repeat center center fixed;
 #abo,#pro,#ski,#con{
 	padding-top: 15px;
 }
+
+body,#declaration {
+  background-color:/*#ce3635*/#BBB230;
+  text-align: center;
+  color:/*#fff*/#40E0D0;
+  padding-top:10em;
+}
+
+* { color:#fff; text-decoration: none;}
