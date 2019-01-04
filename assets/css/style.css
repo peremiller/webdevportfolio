@@ -1,5 +1,5 @@
-/*body{
-background: url("https://youtu.be/Q6m5On60yh0") no-repeat center center fixed;
+body{
+background: url(../images/back2.jpg) no-repeat center center fixed;
 	background-size: cover;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -7,7 +7,7 @@ background: url("https://youtu.be/Q6m5On60yh0") no-repeat center center fixed;
 	background-size: cover;
 
 	}
-*/
+
 #spacing{
 	height:10px;
 }
@@ -83,3 +83,12 @@ body,#declaration {
 }
 
 * { color:#fff; text-decoration: none;}
+
+.card-body{
+	background: url(../images/back.jpg) no-repeat center center fixed;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
