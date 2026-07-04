@@ -1,218 +1,464 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="IE-Edge">
-	<title>Miller Perez</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miller Perez — Full-Stack Web Developer</title>
+<meta name="description" content="Miller Perez is a full-stack web developer building web apps, tools, and AI-powered products. Over a decade of experience across startups, international, and global companies.">
+<meta property="og:title" content="Miller Perez — Full-Stack Web Developer">
+<meta property="og:description" content="Full-stack web developer building web apps, tools, and AI-powered products.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<style>
+:root{
+  --bg:#0a0e1a;
+  --bg-soft:#101528;
+  --card:#151b33;
+  --card-hover:#1a2140;
+  --border:rgba(148,163,255,.12);
+  --border-hover:rgba(148,163,255,.35);
+  --text:#e6e9f5;
+  --muted:#8b93b8;
+  --accent:#7c8cff;
+  --accent-2:#4ee1c1;
+  --accent-3:#ff7ac3;
+  --grad:linear-gradient(120deg,#7c8cff,#4ee1c1);
+  --font-display:'Space Grotesk',system-ui,sans-serif;
+  --font-body:'Inter',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.7;
+  overflow-x:hidden;
+}
+::selection{background:var(--accent);color:#fff}
 
-	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+/* ---------- background glow ---------- */
+.bg-orbs{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.bg-orbs::before,.bg-orbs::after{
+  content:"";position:absolute;border-radius:50%;filter:blur(120px);opacity:.22;
+}
+.bg-orbs::before{width:600px;height:600px;background:#5b6cff;top:-200px;right:-150px}
+.bg-orbs::after{width:500px;height:500px;background:#0f9d84;bottom:-180px;left:-120px}
+.grid-lines{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(rgba(148,163,255,.045) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(148,163,255,.045) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 40%,transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 40%,transparent 100%);
+}
 
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+/* ---------- layout ---------- */
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+section{padding:96px 0}
 
-	<script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+/* ---------- nav ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(10,14,26,.7);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--font-display);font-weight:700;font-size:1.15rem;text-decoration:none;color:var(--text);letter-spacing:.5px}
+.logo span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav-links{display:flex;gap:6px;list-style:none}
+.nav-links a{
+  color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500;
+  padding:8px 14px;border-radius:8px;transition:all .2s;
+}
+.nav-links a:hover{color:var(--text);background:rgba(148,163,255,.08)}
+.nav-links a.active{color:var(--accent)}
+.nav-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer}
 
-	<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="assets/js/js.js"></script>
+/* ---------- hero ---------- */
+.hero{min-height:100vh;display:flex;align-items:center;padding:140px 0 80px}
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.85rem;font-weight:600;color:var(--accent-2);
+  border:1px solid rgba(78,225,193,.3);background:rgba(78,225,193,.07);
+  padding:6px 14px;border-radius:99px;margin-bottom:28px;letter-spacing:.4px;
+}
+.hero-kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--accent-2);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.hero h1{
+  font-family:var(--font-display);
+  font-size:clamp(2.6rem,7vw,4.6rem);
+  font-weight:700;line-height:1.08;letter-spacing:-1px;margin-bottom:22px;
+}
+.hero h1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.typeline{
+  font-family:var(--font-display);
+  font-size:clamp(1.2rem,3vw,1.7rem);font-weight:600;
+  color:var(--accent-3);margin-bottom:22px;min-height:1.6em;
+}
+.typeline .cursor{display:inline-block;width:3px;background:var(--accent-3);animation:blink 1s step-end infinite;margin-left:2px}
+@keyframes blink{50%{opacity:0}}
+.hero p.lead{max-width:560px;color:var(--muted);font-size:1.08rem;margin-bottom:40px}
+.btn-row{display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  font-family:var(--font-display);font-weight:600;font-size:.95rem;
+  padding:13px 28px;border-radius:12px;text-decoration:none;
+  transition:transform .2s,box-shadow .2s;display:inline-block;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--grad);color:#0a0e1a;box-shadow:0 8px 24px rgba(124,140,255,.25)}
+.btn-primary:hover{box-shadow:0 12px 32px rgba(124,140,255,.4)}
+.btn-ghost{color:var(--text);border:1px solid var(--border-hover)}
+.btn-ghost:hover{background:rgba(148,163,255,.08)}
 
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> 
+/* ---------- section headers ---------- */
+.sec-label{
+  font-family:var(--font-display);font-size:.82rem;font-weight:600;
+  letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;
+}
+.sec-title{
+  font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);
+  font-weight:700;letter-spacing:-.5px;margin-bottom:36px;
+}
 
-<script type="text/javascript" src="assets/js/popper.min.js"></script>
+/* ---------- about ---------- */
+.about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:start}
+.about-text p{color:var(--muted);margin-bottom:18px;font-size:1.03rem}
+.about-text strong{color:var(--text);font-weight:600}
+.fact-card{
+  background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px;
+}
+.fact{display:flex;justify-content:space-between;align-items:baseline;padding:13px 0;border-bottom:1px solid var(--border)}
+.fact:last-child{border-bottom:none}
+.fact .k{color:var(--muted);font-size:.88rem}
+.fact .v{font-family:var(--font-display);font-weight:600;font-size:.95rem;text-align:right}
 
-<link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+/* ---------- projects ---------- */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:22px}
+.proj{
+  background:var(--card);border:1px solid var(--border);border-radius:18px;
+  overflow:hidden;text-decoration:none;color:var(--text);display:flex;flex-direction:column;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+}
+.proj:hover{transform:translateY(-6px);border-color:var(--border-hover);box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.proj-thumb{
+  height:120px;display:flex;align-items:center;justify-content:center;
+  font-size:2.6rem;position:relative;overflow:hidden;
+}
+.proj-thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,var(--card))}
+.t1{background:linear-gradient(135deg,#2b3a8f,#0e7a68)}
+.t2{background:linear-gradient(135deg,#7a2b8f,#31379e)}
+.t3{background:linear-gradient(135deg,#0e6e8f,#2b8f56)}
+.t4{background:linear-gradient(135deg,#8f5a2b,#8f2b49)}
+.t5{background:linear-gradient(135deg,#2b8f83,#5a2b8f)}
+.t6{background:linear-gradient(135deg,#8f2b2b,#8f7a2b)}
+.proj-body{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1}
+.proj h3{font-family:var(--font-display);font-size:1.15rem;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.proj h3 .arrow{margin-left:auto;color:var(--muted);transition:transform .25s,color .25s;font-size:1rem}
+.proj:hover h3 .arrow{transform:translate(3px,-3px);color:var(--accent-2)}
+.proj p{color:var(--muted);font-size:.92rem;flex:1;margin-bottom:16px}
+.tags{display:flex;flex-wrap:wrap;gap:7px}
+.tag{
+  font-size:.72rem;font-weight:600;letter-spacing:.3px;
+  color:var(--accent);background:rgba(124,140,255,.1);
+  border:1px solid rgba(124,140,255,.2);
+  padding:3px 10px;border-radius:99px;
+}
 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+/* ---------- skills ---------- */
+.skill-groups{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px}
+.skill-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px}
+.skill-card h3{
+  font-family:var(--font-display);font-size:1rem;font-weight:600;margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+}
+.skill-card h3 .ico{font-size:1.2rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  font-size:.82rem;font-weight:500;color:var(--text);
+  background:rgba(148,163,255,.07);border:1px solid var(--border);
+  padding:5px 13px;border-radius:99px;transition:all .2s;
+}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ---------- contact ---------- */
+.contact-card{
+  background:linear-gradient(135deg,rgba(124,140,255,.12),rgba(78,225,193,.08));
+  border:1px solid var(--border-hover);border-radius:24px;
+  padding:56px 40px;text-align:center;
+}
+.contact-card h2{font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;margin-bottom:14px}
+.contact-card p{color:var(--muted);max-width:480px;margin:0 auto 32px}
+.contact-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* ---------- footer ---------- */
+footer{padding:36px 0;border-top:1px solid var(--border);text-align:center;color:var(--muted);font-size:.85rem}
+footer a{color:var(--accent);text-decoration:none}
+
+/* ---------- reveal animation ---------- */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:820px){
+  .about-grid{grid-template-columns:1fr}
+  section{padding:72px 0}
+  .nav-links{
+    position:fixed;top:57px;right:0;left:0;flex-direction:column;gap:0;
+    background:rgba(10,14,26,.97);border-bottom:1px solid var(--border);
+    padding:10px 24px 18px;display:none;
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{padding:12px 10px}
+  .nav-toggle{display:block}
+}
+</style>
 </head>
 <body>
 
-	<div class="container-fluid">
+<div class="bg-orbs"></div>
+<div class="grid-lines"></div>
 
-		<div class="row" id="halfspacing"><!-- start of row1 -->
-			<div class="col"></div>
-			<div class="col"></div>
-			<div class="col"></div>
-		</div><!-- end of row1-->
-		<div class="row">
-				<div class="col typewrite"></div>
-			<div class="col">
-				<h1>
-					<a href="" class="typewrite" id="declaration" data-period="2000" data-type='[ "Creative.", "Talented.","Driven.","Smartworking.","Resourceful.","Passionate."]'>
-						<span class="wrap"></span>
-					</a>
-				</h1>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#top">MILLER<span>.PEREZ</span></a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
 
-			</div>
-				<div class="col"></div>
-		</div>
-		<div class="row"><!-- start of row2 -->
-			<div class="col">
-			</div>
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-kicker"><span class="dot"></span>Available for interesting projects</div>
+    <h1>Hi, I'm <span class="grad">Miller Perez</span>.<br>I build things for the web.</h1>
+    <div class="typeline"><span id="typewriter"></span><span class="cursor">&nbsp;</span></div>
+    <p class="lead">Full-stack web developer with over a decade in the IT industry — shipping web apps, automation tools, and AI-powered products from Metro Manila to the world.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="#projects">See my work</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</header>
 
-			<div class="col-lg-auto">
+<section id="about">
+  <div class="wrap">
+    <div class="sec-label reveal">01 — About</div>
+    <h2 class="sec-title reveal">Know me</h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm a <strong>full-stack web developer</strong> and a relentless learning enthusiast with <strong>over a decade of experience</strong> in the IT industry.</p>
+        <p>I've delivered in every kind of environment — a <strong>startup</strong>, an <strong>international company</strong>, and a <strong>global enterprise</strong> — through resourcefulness, solid task management, and work ethic I'm proud of.</p>
+        <p>These days I build fast, focused web apps: dashboards, trackers, bots, and AI-integrated tools. I care about products that are <strong>useful on day one</strong> — offline-first, zero-friction, and shipped, not shelved.</p>
+        <p>Beyond code, I'm working toward <strong>data science, entrepreneurship, and trading</strong> — and building tools for each along the way.</p>
+      </div>
+      <div class="fact-card reveal">
+        <div class="fact"><span class="k">Based in</span><span class="v">Metro Manila, PH 🇵🇭</span></div>
+        <div class="fact"><span class="k">Experience</span><span class="v">10+ years in IT</span></div>
+        <div class="fact"><span class="k">Focus</span><span class="v">Full-stack · AI tools</span></div>
+        <div class="fact"><span class="k">Apps shipped</span><span class="v">40+ live projects</span></div>
+        <div class="fact"><span class="k">Currently</span><span class="v">Building &amp; learning</span></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<hr id="extendwidth">
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-label reveal">02 — Projects</div>
+    <h2 class="sec-title reveal">Selected work</h2>
+    <div class="proj-grid">
 
-<h1 class="d-block offset-lg-5 " style="color: black">MILLER</h1>
-<span id="minispace"></span>
+      <a class="proj reveal" href="https://solution-hub-tau.vercel.app" target="_blank" rel="noopener">
+        <div class="proj-thumb t1">🌍</div>
+        <div class="proj-body">
+          <h3>Solution Hub <span class="arrow">↗</span></h3>
+          <p>A 21-domain super app tracking ~21,000 solutions to global problems — disease, energy, water, and all 17 UN SDGs — with cards, tables, maps, and per-subtask timelines.</p>
+          <div class="tags"><span class="tag">JavaScript</span><span class="tag">Leaflet</span><span class="tag">Data viz</span></div>
+        </div>
+      </a>
 
-<h6 class="d-block" ><samp style="color: black">W E B   <kbd>D</kbd> E V E L <kbd>O</kbd> P <kbd>E R</kbd><samp></h6>
-	<span id="minispace"></span>
-	<h1 class="d-block offset-lg-8" style="color: black">PEREZ</h1>
-	<hr id="extendwidth">
-</div>
+      <a class="proj reveal" href="https://retroforge-app.vercel.app" target="_blank" rel="noopener">
+        <div class="proj-thumb t2">🔄</div>
+        <div class="proj-body">
+          <h3>RetroForge <span class="arrow">↗</span></h3>
+          <p>Sprint retrospective board with live multi-user shared rooms, an offline + AI solution engine, and facilitator tooling for real agile teams.</p>
+          <div class="tags"><span class="tag">Serverless</span><span class="tag">Realtime</span><span class="tag">AI</span></div>
+        </div>
+      </a>
 
-<div class="col">
-</div>
-</div><!-- end of row2 -->
+      <a class="proj reveal" href="https://test-case-manager-delta.vercel.app" target="_blank" rel="noopener">
+        <div class="proj-thumb t3">🧪</div>
+        <div class="proj-body">
+          <h3>TestForge <span class="arrow">↗</span></h3>
+          <p>Multi-plan test case management: requirements explorer, gap analysis, tasks, training decks, and Word/Excel/PPT/PDF export — a full QA workbench.</p>
+          <div class="tags"><span class="tag">JavaScript</span><span class="tag">Office export</span><span class="tag">QA</span></div>
+        </div>
+      </a>
 
-<div class="row"><!-- start of row3 -->
+      <a class="proj reveal" href="https://wealth-concerns-atlas.vercel.app" target="_blank" rel="noopener">
+        <div class="proj-thumb t4">🗺️</div>
+        <div class="proj-body">
+          <h3>Wealth Concerns Atlas <span class="arrow">↗</span></h3>
+          <p>Interactive atlas exploring 2,880 rated solutions to high-net-worth concerns, with scoring, filtering, and deep-dive detail views.</p>
+          <div class="tags"><span class="tag">React</span><span class="tag">Vite</span><span class="tag">Data viz</span></div>
+        </div>
+      </a>
 
-	<div class="col" id="halfspacing"></div>
-</div><!-- end of row3 -->
+      <a class="proj reveal" href="https://tagalog-crm.vercel.app" target="_blank" rel="noopener">
+        <div class="proj-thumb t5">🤝</div>
+        <div class="proj-body">
+          <h3>Kabayan CRM <span class="arrow">↗</span></h3>
+          <p>Zero-backend CRM for digital-product sellers — leads, customers, and sales pipelines that live entirely in the browser. Private by design.</p>
+          <div class="tags"><span class="tag">Offline-first</span><span class="tag">localStorage</span><span class="tag">CRM</span></div>
+        </div>
+      </a>
 
-<div class="row"><!-- start of row4 -->
+      <a class="proj reveal" href="https://claude-group-chat.vercel.app" target="_blank" rel="noopener">
+        <div class="proj-thumb t6">💬</div>
+        <div class="proj-body">
+          <h3>Claude Group Chat <span class="arrow">↗</span></h3>
+          <p>Multi-user AI-crew chat with 6 AI personas and 21 personalities, invite links, and an opt-in live LLM mode built on the Claude API.</p>
+          <div class="tags"><span class="tag">AI</span><span class="tag">Claude API</span><span class="tag">Multi-user</span></div>
+        </div>
+      </a>
 
-	<div class="col-lg">
-	</div>
+    </div>
+    <p class="reveal" style="margin-top:28px;color:var(--muted)">
+      …and 40+ more shipped apps — trackers, bots, planners, and PWAs — collected at
+      <a href="https://aj-portfolio-hub.vercel.app" target="_blank" rel="noopener" style="color:var(--accent-2);text-decoration:none;font-weight:600">aj-portfolio-hub.vercel.app ↗</a>
+    </p>
+  </div>
+</section>
 
-	<div class="col-lg">
-		<button type="button" class="btn btn-light offset-lg-1 sticky-top nav-link ghost" id="pillabout" href="#abo">
-			<a class="nav-link" href="#abo"><kbd><h2>kNow me</h2></kbd></a>
-		</button>
-	</div>
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-label reveal">03 — Skills</div>
+    <h2 class="sec-title reveal">Prowess</h2>
+    <div class="skill-groups">
+      <div class="skill-card reveal">
+        <h3><span class="ico">🎨</span>Front-end</h3>
+        <div class="chips">
+          <span class="chip">JavaScript</span><span class="chip">TypeScript</span><span class="chip">React</span>
+          <span class="chip">Next.js</span><span class="chip">HTML/CSS</span><span class="chip">Vite</span><span class="chip">PWA</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h3><span class="ico">⚙️</span>Back-end</h3>
+        <div class="chips">
+          <span class="chip">Node.js</span><span class="chip">Python</span><span class="chip">Laravel / PHP</span>
+          <span class="chip">FastAPI</span><span class="chip">REST APIs</span><span class="chip">Serverless</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h3><span class="ico">📱</span>Mobile &amp; bots</h3>
+        <div class="chips">
+          <span class="chip">Flutter</span><span class="chip">Kotlin / Compose</span>
+          <span class="chip">Telegram bots</span><span class="chip">Push / alerts</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h3><span class="ico">🗄️</span>Data</h3>
+        <div class="chips">
+          <span class="chip">SQL / SQLite</span><span class="chip">MongoDB</span><span class="chip">Supabase</span>
+          <span class="chip">FTS / search</span><span class="chip">Data viz</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h3><span class="ico">🤖</span>AI engineering</h3>
+        <div class="chips">
+          <span class="chip">Claude API</span><span class="chip">LLM apps</span><span class="chip">Whisper</span>
+          <span class="chip">Agents &amp; skills</span><span class="chip">Prompt design</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h3><span class="ico">🚀</span>Ship it</h3>
+        <div class="chips">
+          <span class="chip">Git / GitHub</span><span class="chip">Vercel</span><span class="chip">CI basics</span>
+          <span class="chip">Offline-first</span><span class="chip">Rapid prototyping</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-	<div class="col-lg">
-		<button type="button" class="btn btn-light offset-lg-1 sticky-top nav-link ghost" id="pillproj" href="#pro">
-			<a class="nav-link" href="#pro"><kbd><h2>projEcts</h2></kbd></a>
-		</button>
-	</div>
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-label reveal">04 — Contact</div>
+    <div class="contact-card reveal">
+      <h2>Let's build something.</h2>
+      <p>Have a project, a role, or just an idea worth talking about? My inbox is open — I usually reply within a day.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:pjomill@gmail.com">✉️ pjomill@gmail.com</a>
+        <a class="btn btn-ghost" href="https://github.com/peremiller" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn btn-ghost" href="https://aj-portfolio-hub.vercel.app" target="_blank" rel="noopener">Portfolio Hub ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-	<div class="col-lg">
-		<button type="button" class="btn btn-light offset-lg-1 sticky-top nav-link ghost" id="pillskill" href="#ski">
-			<a class="nav-link" href="#ski"><kbd><h2>proWess</h2></kbd></a>
-		</button>
-	</div>
+<footer>
+  <div class="wrap">
+    © <span id="year"></span> Miller Perez · Designed &amp; built by hand — no templates this time.
+  </div>
+</footer>
 
-	<div class="col-lg">
-		<button type="button" class="btn btn-light offset-lg-1 sticky-top nav-link ghost" id="pillcontact" href="#con">
-			<a class="nav-link" href="#con"><kbd><h2>Speak</h2></kbd></a>
-		</button>
-	</div>
+<script>
+// ----- typewriter (a nod to the original site) -----
+const WORDS = ["Creative.","Driven.","Resourceful.","Passionate.","Full-stack.","Always shipping."];
+const tw = document.getElementById("typewriter");
+let wi = 0, ci = 0, deleting = false;
+function tick(){
+  const word = WORDS[wi];
+  ci += deleting ? -1 : 1;
+  tw.textContent = word.slice(0, ci);
+  let delay = deleting ? 45 : 95;
+  if(!deleting && ci === word.length){ delay = 1800; deleting = true; }
+  else if(deleting && ci === 0){ deleting = false; wi = (wi+1) % WORDS.length; delay = 350; }
+  setTimeout(tick, delay);
+}
+tick();
 
-	<div class="col-lg">
-	</div>
+// ----- scroll reveal -----
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
-</div><!-- end of row4 -->
-<!-- 			<div class="row">
-				<div class="col" id="largespace"></div>
-			</div> -->
+// ----- active nav link -----
+const sections = [...document.querySelectorAll("section[id]")];
+const links = [...document.querySelectorAll(".nav-links a")];
+const spy = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      links.forEach(l => l.classList.toggle("active", l.getAttribute("href") === "#"+e.target.id));
+    }
+  });
+},{rootMargin:"-40% 0px -55% 0px"});
+sections.forEach(s => spy.observe(s));
 
-			<div class="row" id="spacing"><!-- start of row5.1 -->
-				<div class="col"></div>
-				<div class="col"></div>
-				<div class="col"></div>
-			</div><!-- end of row5.1-->
-			<div class="row"><!-- start of row5.2 -->
+// ----- mobile menu -----
+const toggle = document.querySelector(".nav-toggle");
+const menu = document.querySelector(".nav-links");
+toggle.addEventListener("click", () => {
+  const open = menu.classList.toggle("open");
+  toggle.setAttribute("aria-expanded", open);
+});
+menu.addEventListener("click", e => { if(e.target.tagName === "A") menu.classList.remove("open"); });
 
-				<div class="col" id="halfspacing"></div>
-			</div><!-- end of row5.2 -->
-
-			<div data-spy="scroll" data-target="#navbar-example2" data-offset="0" class="row">
-				<div class="col-lg-11" id="abo" style="color: black">
-					<h4 id="abo1" style="color: black">k<kbd>N</kbd>ow me</h4>
-					<p style="color: black">Miller Perez is a full stack web developer and a learning <br> enthusiast with almost a decade of experience in the IT industry.</p>
-					<p style="color: black">He has engaged well in multiple technological delivery environments <br>such as a startup, an international, and a global company through <br>resourcefulness, good task management, and commendable work ethics.</p>
-					<p style="color: black">He also aims to be a data scientist, entrepreneur, and a <br>stock & currency trader.</p>
-					<div id="pro"></div>
-					<h4 id="pro1">proj<kbd>E</kbd>cts</h4>
-					
-					<div class="card-deck"><!-- start of featured stories style="background-color: #546e7a;"-->
-						<div class="card" style="background-color: #546e7a;color:white">
-							<div class="card-body">
-								<h5 class="card-title"><strong style="color: black"><a href="https://peremiller.github.io/csp1-hospital/index.html">Capstone 1</a></strong></h5><br><br>
-								<img class="card-img-top" src="assets/images/preview.jpg" alt="Card image cap" height="200px" width="350px">
-								<p class="card-text" style="color: black">This is a static website for hospital.</p>
-
-							</div>
-						</div>
-						<div class="card" >
-							<div class="card-body">
-								<h5 class="card-title" style="color: black"><strong style="color: black">Capstone 2</strong></h5>
-								<img class="card-img-top" src="assets/images/preview.jpg" alt="Card image cap" height="200px" width="350px"><br><br><br>
-								<p class="card-text" style="color: black">This is a website using Laravel framework.</p>
-
-							</div>
-						</div>
-						<div class="card" style="background-color: #546e7a;color:white">
-
-							<div class="card-body">
-								<h5 class="card-title"><strong style="color: black">Capstone 3</strong></h5><br><br>
-								<img class="card-img-top" src="assets/images/preview.jpg" alt="Card image cap" height="200px" width="350px">
-								<p class="card-text" style="color: black">This is a website using MELN (MongoDB, Express.js, Laravel, and Node.js)</p>
-
-							</div>
-						</div>
-					</div><!-- end of featured stories -->
-
-
-					<div id="ski"></div>
-					<h4 id="ski1" style="color: black">pro<kbd>W</kbd>ess</h4>
-					<p style="color: black">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					<p style="color: black">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					<p style="color: black">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					<p style="color: black">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					<div id="con"></div>
-					<h4 id="con1" style="color: black"><kbd>S</kbd>peak</h4>
-					<p style="color: black">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					<p style="color: black">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					<p style="color: black">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					<p style="color: black">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><!-- start of col1 -->
-				</div><!-- end of col1 -->
-				<div class="col-lg-1" id="abo">
-				</div>
-			</div>
-
-		</div><!-- end of container-fluid -->
-
-	</body>
-	</html>
+// ----- footer year -----
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
