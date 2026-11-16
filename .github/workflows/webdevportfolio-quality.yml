@@ -30,17 +30,17 @@ jobs:
       # A failed read-only check is not a passing release gate. Provide the exact
       # regenerated files from a complete Actions checkout for review and commit.
       - name: Check committed offline bundle without modification
-        id: committed-offline-check
+        id: committed_offline_check
         continue-on-error: true
         run: python3 scripts/build-offline.py --check
       - name: Regenerate review candidate in temporary CI checkout only
-        if: steps.committed-offline-check.outcome == 'failure'
+        if: steps.committed_offline_check.outcome == 'failure'
         run: |
           python3 scripts/build-offline.py
           python3 scripts/build-offline.py --check
           git status --short
       - name: Attach original-path offline files for review (no publishing)
-        if: steps.committed-offline-check.outcome == 'failure'
+        if: steps.committed_offline_check.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
           name: webdevportfolio-offline-repair-candidate
@@ -51,7 +51,7 @@ jobs:
           if-no-files-found: error
           retention-days: 7
       - name: Preserve failing gate until tracked offline files are fixed
-        if: steps.committed-offline-check.outcome == 'failure'
+        if: steps.committed_offline_check.outcome == 'failure'
         run: |
           echo 'Committed offline files are stale. Inspect and commit the generated originals.' >&2
           exit 1
