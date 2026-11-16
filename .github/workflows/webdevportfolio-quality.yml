@@ -1,0 +1,31 @@
+name: WebDevPortfolio offline integrity
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "scripts/build-offline.py"
+      - "tests/test_build_offline.py"
+      - ".github/workflows/webdevportfolio-quality.yml"
+      - "**/*.html"
+      - "offline-assets.json"
+      - "sw.js"
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run source-preservation and offline safety tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Check actual published offline bundle without modification
+        run: python3 scripts/build-offline.py --check
