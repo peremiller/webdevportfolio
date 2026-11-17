@@ -25,6 +25,10 @@ class PortfolioNavigationTests(unittest.TestCase):
             r'\s*tw\.textContent = WORDS\[0\];\s*\}\s*else\s*\{\s*tick\(\);'
         )
 
+    def test_project_cards_fit_320px_viewports(self):
+        # A fixed 310px minimum previously exceeded the 272px content column.
+        self.assertIn("minmax(min(100%,310px),1fr)", HTML)
+
     def test_navigation_has_stable_hash_targets(self):
         ids = set(re.findall(r'\bid="([^"]+)"', HTML))
         for href in re.findall(r'<a\b[^>]*\bhref="#([^"]+)"', HTML):
