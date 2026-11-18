@@ -21,6 +21,9 @@ class MotionPreferenceSourceTests(unittest.TestCase):
         self.assertIn('clearTimeout(typeTimer)', HTML)
         self.assertIn('if (reducedMotion.matches) tw.textContent = WORDS[0]', HTML)
 
+    def test_project_cards_allow_320px_mobile_width(self):
+        self.assertIn('minmax(min(100%,310px),1fr)', HTML)
+
     def test_existing_nav_and_sections_are_preserved(self):
         self.assertIn('aria-controls="site-navigation"', HTML)
         self.assertIn('<main id="main-content" tabindex="-1">', HTML)
