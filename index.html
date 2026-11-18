@@ -79,7 +79,9 @@ nav{
 .nav-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer}
 
 .nav-links a:focus-visible,.nav-toggle:focus-visible,.btn:focus-visible,.proj:focus-visible,.logo:focus-visible{outline:3px solid var(--accent-2);outline-offset:3px}
-section[id],header[id]{scroll-margin-top:80px}
+.skip-link{position:fixed;top:-5rem;left:1rem;z-index:200;padding:.65rem 1rem;border-radius:.5rem;background:var(--accent-2);color:var(--bg);font-weight:700;text-decoration:none}
+.skip-link:focus-visible{top:.75rem;outline:3px solid var(--text);outline-offset:3px}
+section[id],header[id],main[id]{scroll-margin-top:80px}
 
 /* ---------- hero ---------- */
 .hero{min-height:100vh;display:flex;align-items:center;padding:140px 0 80px}
@@ -140,7 +142,7 @@ section[id],header[id]{scroll-margin-top:80px}
 .fact .v{font-family:var(--font-display);font-weight:600;font-size:.95rem;text-align:right}
 
 /* ---------- projects ---------- */
-.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:22px}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,310px),1fr));gap:22px}
 .proj{
   background:var(--card);border:1px solid var(--border);border-radius:18px;
   overflow:hidden;text-decoration:none;color:var(--text);display:flex;flex-direction:column;
@@ -207,6 +209,8 @@ footer a{color:var(--accent);text-decoration:none}
 .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
   .reveal,.motion-ready .reveal{opacity:1;transform:none;transition:none}
+  .hero-kicker .dot,.typeline .cursor{animation:none}
+  .typeline .cursor{display:none}
   html{scroll-behavior:auto}
 }
 
@@ -226,6 +230,7 @@ footer a{color:var(--accent);text-decoration:none}
 </style>
 <meta name="offline-limits" content="Saved pages and local tools work offline. External links and live services need internet."><link rel="manifest" href="manifest.webmanifest"><script data-offline-client src="offline-client.js" defer></script></head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
 <div class="bg-orbs"></div>
 <div class="grid-lines"></div>
@@ -243,6 +248,7 @@ footer a{color:var(--accent);text-decoration:none}
   </div>
 </nav>
 
+<main id="main-content" tabindex="-1">
 <header class="hero" id="top">
   <div class="wrap">
     <div class="hero-kicker"><span class="dot"></span>Available for interesting projects</div>
@@ -411,6 +417,7 @@ footer a{color:var(--accent);text-decoration:none}
     </div>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="wrap">
@@ -422,16 +429,23 @@ footer a{color:var(--accent);text-decoration:none}
 // ----- typewriter (a nod to the original site) -----
 const WORDS = ["Creative.","Driven.","Resourceful.","Passionate.","Full-stack.","Always shipping."];
 const tw = document.getElementById("typewriter");
-let wi = 0, ci = 0, deleting = false;
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+let wi = 0, ci = 0, deleting = false, typeTimer;
 function tick(){
+  if (reducedMotion.matches) { tw.textContent = WORDS[0]; return; }
   const word = WORDS[wi];
   ci += deleting ? -1 : 1;
   tw.textContent = word.slice(0, ci);
   let delay = deleting ? 45 : 95;
   if(!deleting && ci === word.length){ delay = 1800; deleting = true; }
   else if(deleting && ci === 0){ deleting = false; wi = (wi+1) % WORDS.length; delay = 350; }
-  setTimeout(tick, delay);
+  typeTimer = setTimeout(tick, delay);
 }
+reducedMotion.addEventListener?.("change", () => {
+  clearTimeout(typeTimer);
+  if (reducedMotion.matches) tw.textContent = WORDS[0];
+  else { wi = 0; ci = 0; deleting = false; tick(); }
+});
 tick();
 
 // ----- scroll reveal -----
