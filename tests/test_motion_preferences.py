@@ -1,0 +1,33 @@
+"""Source-level reduced-motion guardrails; these do not replace browser tests."""
+import re
+import unittest
+from pathlib import Path
+
+HTML = (Path(__file__).resolve().parents[1] / "index.html").read_text(encoding="utf-8")
+
+
+class MotionPreferenceSourceTests(unittest.TestCase):
+    def test_reduced_motion_disables_blink_and_pulse(self):
+        css = re.search(r'@media\\s*\\(prefers-reduced-motion:reduce\\)\\s*\\{([^}]+)\\}', HTML)
+        self.assertIsNotNone(css)
+        self.assertIn('.hero-kicker .dot,.typeline .cursor{animation:none}', css.group(1))
+        self.assertIn('.typeline .cursor{display:none}', css.group(1))
+
+    def test_typewriter_has_static_reduced_motion_fallback(self):
+        self.assertIn('const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")', HTML)
+        self.assertIn('if (reducedMotion.matches) { tw.textContent = WORDS[0]; return; }', HTML)
+        self.assertIn('typeTimer = setTimeout(tick, delay)', HTML)
+
+    def test_motion_preference_change_cancels_old_timer(self):
+        self.assertIn('reducedMotion.addEventListener?.("change"', HTML)
+        self.assertIn('clearTimeout(typeTimer)', HTML)
+        self.assertIn('if (reducedMotion.matches) tw.textContent = WORDS[0]', HTML)
+
+    def test_existing_nav_and_sections_are_preserved(self):
+        self.assertIn('aria-controls="site-navigation"', HTML)
+        self.assertIn('<main id="main-content">', HTML)
+        self.assertIn('window.addEventListener("resize"', HTML)
+
+
+if __name__ == "__main__":
+    unittest.main()
