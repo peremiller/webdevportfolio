@@ -207,6 +207,8 @@ footer a{color:var(--accent);text-decoration:none}
 .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
   .reveal,.motion-ready .reveal{opacity:1;transform:none;transition:none}
+  .hero-kicker .dot,.typeline .cursor{animation:none}
+  .typeline .cursor{display:none}
   html{scroll-behavior:auto}
 }
 
@@ -422,16 +424,23 @@ footer a{color:var(--accent);text-decoration:none}
 // ----- typewriter (a nod to the original site) -----
 const WORDS = ["Creative.","Driven.","Resourceful.","Passionate.","Full-stack.","Always shipping."];
 const tw = document.getElementById("typewriter");
-let wi = 0, ci = 0, deleting = false;
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+let wi = 0, ci = 0, deleting = false, typeTimer;
 function tick(){
+  if (reducedMotion.matches) { tw.textContent = WORDS[0]; return; }
   const word = WORDS[wi];
   ci += deleting ? -1 : 1;
   tw.textContent = word.slice(0, ci);
   let delay = deleting ? 45 : 95;
   if(!deleting && ci === word.length){ delay = 1800; deleting = true; }
   else if(deleting && ci === 0){ deleting = false; wi = (wi+1) % WORDS.length; delay = 350; }
-  setTimeout(tick, delay);
+  typeTimer = setTimeout(tick, delay);
 }
+reducedMotion.addEventListener?.("change", () => {
+  clearTimeout(typeTimer);
+  if (reducedMotion.matches) tw.textContent = WORDS[0];
+  else { wi = 0; ci = 0; deleting = false; tick(); }
+});
 tick();
 
 // ----- scroll reveal -----
