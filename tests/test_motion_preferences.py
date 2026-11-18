@@ -1,5 +1,4 @@
 """Source-level reduced-motion guardrails; these do not replace browser tests."""
-import re
 import unittest
 from pathlib import Path
 
@@ -8,10 +7,9 @@ HTML = (Path(__file__).resolve().parents[1] / "index.html").read_text(encoding="
 
 class MotionPreferenceSourceTests(unittest.TestCase):
     def test_reduced_motion_disables_blink_and_pulse(self):
-        css = re.search(r'@media\\s*\\(prefers-reduced-motion:reduce\\)\\s*\\{([^}]+)\\}', HTML)
-        self.assertIsNotNone(css)
-        self.assertIn('.hero-kicker .dot,.typeline .cursor{animation:none}', css.group(1))
-        self.assertIn('.typeline .cursor{display:none}', css.group(1))
+        css = HTML.split('@media (prefers-reduced-motion:reduce){', 1)[1].split('/* ---------- responsive', 1)[0]
+        self.assertIn('.hero-kicker .dot,.typeline .cursor{animation:none}', css)
+        self.assertIn('.typeline .cursor{display:none}', css)
 
     def test_typewriter_has_static_reduced_motion_fallback(self):
         self.assertIn('const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")', HTML)
