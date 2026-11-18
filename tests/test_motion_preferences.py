@@ -23,7 +23,8 @@ class MotionPreferenceSourceTests(unittest.TestCase):
 
     def test_existing_nav_and_sections_are_preserved(self):
         self.assertIn('aria-controls="site-navigation"', HTML)
-        self.assertIn('<main id="main-content">', HTML)
+        self.assertIn('<main id="main-content" tabindex="-1">', HTML)
+        self.assertIn('href="#main-content">Skip to main content</a>', HTML)
         self.assertIn('window.addEventListener("resize"', HTML)
 
 
