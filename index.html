@@ -79,7 +79,9 @@ nav{
 .nav-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer}
 
 .nav-links a:focus-visible,.nav-toggle:focus-visible,.btn:focus-visible,.proj:focus-visible,.logo:focus-visible{outline:3px solid var(--accent-2);outline-offset:3px}
-section[id],header[id]{scroll-margin-top:80px}
+.skip-link{position:fixed;top:-5rem;left:1rem;z-index:200;padding:.65rem 1rem;border-radius:.5rem;background:var(--accent-2);color:var(--bg);font-weight:700;text-decoration:none}
+.skip-link:focus-visible{top:.75rem;outline:3px solid var(--text);outline-offset:3px}
+section[id],header[id],main[id]{scroll-margin-top:80px}
 
 /* ---------- hero ---------- */
 .hero{min-height:100vh;display:flex;align-items:center;padding:140px 0 80px}
@@ -228,6 +230,7 @@ footer a{color:var(--accent);text-decoration:none}
 </style>
 <meta name="offline-limits" content="Saved pages and local tools work offline. External links and live services need internet."><link rel="manifest" href="manifest.webmanifest"><script data-offline-client src="offline-client.js" defer></script></head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
 <div class="bg-orbs"></div>
 <div class="grid-lines"></div>
@@ -245,6 +248,7 @@ footer a{color:var(--accent);text-decoration:none}
   </div>
 </nav>
 
+<main id="main-content" tabindex="-1">
 <header class="hero" id="top">
   <div class="wrap">
     <div class="hero-kicker"><span class="dot"></span>Available for interesting projects</div>
@@ -413,6 +417,7 @@ footer a{color:var(--accent);text-decoration:none}
     </div>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="wrap">
