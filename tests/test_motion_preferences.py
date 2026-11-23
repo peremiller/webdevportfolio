@@ -24,6 +24,16 @@ class MotionPreferenceSourceTests(unittest.TestCase):
     def test_project_cards_allow_320px_mobile_width(self):
         self.assertIn('minmax(min(100%,310px),1fr)', HTML)
 
+
+    def test_mobile_navigation_stays_accessible_without_scripts(self):
+        # Mobile links stay visible by default; only enhanced navigation hides them.
+        self.assertIn('.nav-links{width:100%;flex-wrap:wrap;gap:0}', HTML)
+        self.assertIn('.nav-enhanced .nav-links{', HTML)
+        self.assertIn('.nav-enhanced .nav-links.open{display:flex}', HTML)
+        self.assertIn('.nav-enhanced .nav-toggle{display:block}', HTML)
+        self.assertIn('document.documentElement.classList.add("nav-enhanced");', HTML)
+        self.assertIn('if (restoreFocus) toggle.focus()', HTML)
+
     def test_existing_nav_and_sections_are_preserved(self):
         self.assertIn('aria-controls="site-navigation"', HTML)
         self.assertIn('<main id="main-content" tabindex="-1">', HTML)
