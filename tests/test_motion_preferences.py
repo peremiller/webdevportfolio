@@ -34,6 +34,16 @@ class MotionPreferenceSourceTests(unittest.TestCase):
         self.assertIn('document.documentElement.classList.add("nav-enhanced");', HTML)
         self.assertIn('if (restoreFocus) toggle.focus()', HTML)
 
+    def test_selected_text_has_wcag_aa_contrast(self):
+        # Existing dark theme: selected text must be readable, not white on light accent.
+        self.assertIn("::selection{background:var(--accent);color:var(--bg)}", HTML)
+        def luminance(value):
+            rgb = [int(value[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+            linear = [v / 12.92 if v <= 0.04045 else ((v + 0.055) / 1.055) ** 2.4 for v in rgb]
+            return sum(c * w for c, w in zip(linear, (0.2126, 0.7152, 0.0722)))
+        foreground, background = luminance("#0a0e1a"), luminance("#7c8cff")
+        self.assertGreaterEqual((background + 0.05) / (foreground + 0.05), 4.5)
+
     def test_existing_nav_and_sections_are_preserved(self):
         self.assertIn('aria-controls="site-navigation"', HTML)
         self.assertIn('<main id="main-content" tabindex="-1">', HTML)
